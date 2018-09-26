@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {{> head }}
+</head>
+<body>
+    <h1>{{ title }}</h1>
+
+    <form id="form-login" action="/login" method="post">
+        <div>
+            <label for="login">Pseudo: </label>
+            <input type="text" id="login" name="login"></input>
+        </div>
+        <div>
+            <label for="password">Mot de passe: </label>
+            <input type="password" id="password" name="password"></input>
+        </div>
+        <input type="submit" value="Connexion"></input>
+    </form>
+
+    <a href="register">S'inscrire</a>
+
+    {{ flash }}
+</body>
+</html>
