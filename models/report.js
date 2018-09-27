@@ -26,6 +26,13 @@ module.exports = (sequelize, type) => {
                 allowNull: true
             }
         });
+        models.Report.hasOne(models.Report, {
+            onDelete: "SET NULL",
+            foreignKey: {
+                name: 'ShadowId',
+                allowNull: true
+            }
+        });
     };
 
     return Report;

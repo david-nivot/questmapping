@@ -7,6 +7,7 @@ module.exports = {
             host: "127.0.0.1",
             port:"3306",
             dialect: 'mysql',
+            timezone: 'Europe/Paris',
         },
         session: {
             secret: "shiny unicorn"
@@ -20,6 +21,7 @@ module.exports = {
             host: process.env.DB_HOSTNAME,
             port:process.env.DB_PORT,
             dialect: 'mysql',
+            timezone: 'Europe/Paris',
         },
         session: {
             secret: process.env.SESSION_SECRET
