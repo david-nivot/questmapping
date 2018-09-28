@@ -10,14 +10,16 @@ async function cleanQuestsFromDB() {
 
 function processQuestRow( row ) {
 
-    if(!row.goal) { //QuestGroup
+    if(!row.goal) { // is QuestGroup
         sequelize_fixtures.loadFixture({ model: 'QuestGroup', data: row }, models);
-    } else {
+    } else { // is Quest
+        var parent = row.QuestGroupId;
         if(row.icon) {
-            var data = { name: row.reward, icon: row.icon, MapLayerId: row.MapLayerId, QuestGroupId: row.QuestGroupId };
+            var data = { id: row.id, name: row.reward, icon: row.icon, MapLayerId: row.MapLayerId, QuestGroupId: row.QuestGroupId };
+            parent = row.id;
             sequelize_fixtures.loadFixture({ model: 'QuestGroup', data }, models);
         }
-        var data = { goal: row.goal, reward: row.reward, QuestGroupId: row.QuestGroupId };
+        var data = { id: row.id, goal: row.goal, reward: row.reward, QuestGroupId: parent };
         sequelize_fixtures.loadFixture({ model: 'Quest', data }, models);
     }
 
