@@ -50,6 +50,7 @@ module.exports = {
                 where: { ShadowId: { $eq: null } },
                 include: {
                     model: Quest,
+                    required: true,
                     attributes: ['goal', 'reward'],
                     include: {
                         model: QuestGroup,
