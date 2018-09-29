@@ -16,6 +16,7 @@ module.exports = {
                 req.flash('error', 'Identifiant ou mot de passe incorrect.');
                 res.redirect('/login');
             } else {
+                req.session.userid = user.id;
                 req.session.username = user.name;
                 req.session.credentials = user.credentials;
                 res.redirect(req.session.origin || "/");
@@ -42,6 +43,7 @@ module.exports = {
                 req.flash('error', 'Cet utilisateur existe déjà.');
                 res.redirect('/register');
             } else {
+                req.session.userid = user.id;
                 req.session.username = user.name;
                 req.session.credentials = user.credentials;
                 res.redirect(req.session.origin || "/");

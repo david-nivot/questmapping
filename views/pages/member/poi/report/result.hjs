@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {{> head }}
+</head>
+<body>
+    <div class="container">
+        <div class="row align-middle">
+            <h1>{{message}}</h1>
+        </div>
+        <div class="row align-middle">
+            <div class="col-sm">
+                <a href="{{target}}" class="btn btn-success btn-lg btn-block">
+                    Retour à la carte
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

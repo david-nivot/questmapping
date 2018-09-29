@@ -1,5 +1,7 @@
 module.exports = {
     development: {
+        frontUrl: "http://127.0.0.1/",
+        imgProvider: "https://drive.google.com/uc?id={{ID}}",
         db: {
             username: "root",
             password: "",
@@ -14,6 +16,8 @@ module.exports = {
         }
     },
     production: {
+        frontUrl: process.env.FRONT_URL,
+        imgProvider: process.env.IMG_PROVIDER,
         db: {
             username: process.env.DB_USERNAME,
             password: process.env.DB_PASSWORD,
