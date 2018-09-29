@@ -23,6 +23,9 @@ module.exports = {
         }).then(pois => {
             let sb = new StringBuilder();
             sb.append("lat;long;name;description");
+            if(pois.length === 0) {
+                sb.appendLine("0;0;Aucune;");
+            }
             pois.forEach( poi => {
                 sb.appendLine();
                 sb.appendFormat(
@@ -59,6 +62,9 @@ module.exports = {
         }).then(pois => {
             let sb = new StringBuilder();
             sb.append("lat;long;name;description;icon");
+            if(pois.length === 0) {
+                sb.appendLine("0;0;Aucune;;");
+            }
             pois.forEach( poi => {
                 sb.appendLine();
                 sb.appendFormat("{0};{1};{2};",
