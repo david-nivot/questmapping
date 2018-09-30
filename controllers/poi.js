@@ -3,6 +3,7 @@ const QuestGroup = require('../models').QuestGroup;
 const Quest = require('../models').Quest;
 const Report = require('../models').Report;
 const sequelize = require('../models').sequelize;
+const bot = require("./bot");
 
 const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.js')[env];
@@ -60,6 +61,15 @@ function getImageLink( id ) {
 module.exports = {
     async createReport(req, res) {
 
+        var poi = await Poi.findOne({ where: { id :req.params.id } });
+
+        if(!poi) {
+            res.locals.message = "Lieu non existant";
+            res.status(404);
+            res.render('pages/error');
+            return;
+        }
+
         var report = await Report.findOne({
             where: { PoiId: req.params.id },
             include: [ {
@@ -69,7 +79,6 @@ module.exports = {
 
         //Si un rapport existe déjà
         if (report) {
-            var poi = await Poi.findOne({ where: { id :req.params.id } });
             res.locals = {
                 target: config.frontUrl + "#17/" + poi.latitude + "/" + poi.longitude,
                 message: "Un signalement existe déjà pour ce lieu."
@@ -78,14 +87,21 @@ module.exports = {
         } else {
             //Si une quête a été selectionnée
             if(req.query.quest) {
+                var target = config.frontUrl + "#17/" + poi.latitude + "/" + poi.longitude;
+
                 report = await Report.create({
                     PoiId: req.params.id, QuestId: req.query.quest, UserId: req.session.userid
                 });
-                var poi = await Poi.findOne({ where: { id :req.params.id } });
+
+                if(bot.isActive) {
+                    var quest = await Quest.findOne({ where: { id: req.query.quest } });
+                    bot.sendPublicMessage("NewQuest", [poi.name, quest.goal, quest.reward, target]);
+                }
+
                 res.locals = {
-                    target: config.frontUrl + "#17/" + poi.latitude + "/" + poi.longitude,
+                    target,
                     message: report
-                        ? "Enregistrement terminé. Merci pour le partage."
+                        ? "Enregistrement terminé."
                         : "Echec de la création du signalement."
                 }
                 res.render('pages/member/poi/report/result', { partials: {head: 'partials/head'}});

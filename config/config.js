@@ -13,6 +13,11 @@ module.exports = {
         },
         session: {
             secret: "shiny unicorn"
+        },
+        telegram: {
+            token: process.env.TELEGRAM_TOKEN,
+            publicChatId: "-280766905",
+            adminChatId: "-280766905",
         }
     },
     production: {
@@ -29,6 +34,11 @@ module.exports = {
         },
         session: {
             secret: process.env.SESSION_SECRET
+        },
+        telegram: {
+            token: process.env.TELEGRAM_TOKEN,
+            publicChatId: process.env.TELEGRAM_PUBLIC_CHAT_ID,
+            adminChatId: process.env.TELEGRAM_ADMIN_CHAT_ID,
         }
     }
 };

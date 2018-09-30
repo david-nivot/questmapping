@@ -1,17 +1,18 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  background-color: rgb(59, 59, 59);
+    padding: 50px;
+    font-family: "Lato", Helvetica, Arial, sans-serif;
+    background-color: rgb(59, 59, 59);
+    color: white;
 }
 
 a {
-  color: #00B7FF;
+    color: #00B7FF;
 }
 
 .btn-quest {
     display: flex;
     align-items: center;
-    font: 25px "Lato", Helvetica, Arial, sans-serif;
+    font: 25px;
     font-weight: 900;
     color: #636363;
     background-color: #f7fcf6;
@@ -45,4 +46,11 @@ a {
 .img-quest>img {
     height: 64px;
     width: auto;
+}
+
+.message-bloc {
+    min-height: 50vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
