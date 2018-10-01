@@ -10,7 +10,7 @@
         </div>
         <div class="row align-middle">
             <div class="col-sm">
-                <a href="{{target}}" class="btn btn-success btn-lg btn-block">
+                <a href="{{target}}" class="btn btn-primary btn-lg btn-block">
                     Retour à la carte
                 </a>
             </div>

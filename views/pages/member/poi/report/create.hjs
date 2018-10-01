@@ -7,7 +7,7 @@
     <div class="container">
         {{#quests}}
         <a class="row btn-quest align-middle {{#isGroup}}btn-quest-group{{/isGroup}}" href="{{uri}}">
-            <div class="col-sm-10">
+            <div class="col-10">
             {{#isGroup}}
             {{name}}
             {{/isGroup}}
@@ -15,14 +15,11 @@
             {{goal}} ({{reward}})
             {{/isGroup}}
             </div>
-            <div class="col-sm-2 img-quest">
+            <div class="col-2 img-quest">
                 <img src="{{icon}}">
             </div>
         </a>
         {{/quests}}
     </div>
-
-
-
 </body>
 </html>

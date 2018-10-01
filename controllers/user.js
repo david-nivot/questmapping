@@ -4,7 +4,6 @@ module.exports = {
 
     login(req, res) {
         res.locals = {
-            title: 'Connexion',
             flash: req.flash('error')
         }
         res.render('pages/login', { partials: {head: 'partials/head'} });
@@ -26,7 +25,6 @@ module.exports = {
 
     register(req, res) {
         res.locals = {
-            title: 'Inscription',
             flash: req.flash('error')
         }
         res.render('pages/register', { partials: {head: 'partials/head'} });

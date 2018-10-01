@@ -6,7 +6,7 @@ router.get('/', function(req, res, next) {
     res.locals = {
         title: 'QuestMapping'
     }
-    res.render('pages/index');
+    res.render('pages/index', { partials: {head: 'partials/head'} });
 });
 
 router.get('/credentials', function(req, res, next) {
@@ -14,7 +14,7 @@ router.get('/credentials', function(req, res, next) {
         title: 'Droits insuffisants',
         username: req.session.username
     }
-    res.render('pages/credentials');
+    res.render('pages/credentials', { partials: {head: 'partials/head'} });
 });
 
 router.get('/login', UserController.login);

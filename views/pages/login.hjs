@@ -4,22 +4,30 @@
     {{> head }}
 </head>
 <body>
-    <h1>{{ title }}</h1>
-
-    <form id="form-login" action="/login" method="post">
-        <div>
-            <label for="login">Pseudo: </label>
-            <input type="text" id="login" name="login"></input>
+    <div class="container align-middle">
+        <h1>Connexion</h1>
+        <br/>
+        {{#flash}}
+        <div class="alert alert-danger">
+            <strong>Erreur!</strong> {{flash}}
         </div>
-        <div>
-            <label for="password">Mot de passe: </label>
-            <input type="password" id="password" name="password"></input>
+        {{/flash}}
+
+        <form id="form-login" action="/login" method="post">
+            <div class="form-group">
+                <label for="login">Pseudo: </label>
+                <input class="form-control" type="text" id="login" name="login"></input>
+            </div>
+            <div class="form-group">
+                <label for="password">Mot de passe: </label>
+                <input class="form-control" type="password" id="password" name="password"></input>
+            </div>
+            <input type="submit" class="btn btn-primary btn-lg btn-block" value="Connexion"></input>
+        </form>
+
+        <div class="form-group">
+            Pas encore inscrit? <a href="register">S'inscrire</a>
         </div>
-        <input type="submit" value="Connexion"></input>
-    </form>
-
-    <a href="register">S'inscrire</a>
-
-    {{ flash }}
+    </div>
 </body>
 </html>
