@@ -71,3 +71,7 @@ a {
     justify-content: center;
     align-items: center;
 }
+
+.btn-group>label {
+    border: 1px solid #454545;
+}

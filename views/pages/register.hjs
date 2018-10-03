@@ -22,6 +22,18 @@
                 <label for="password">Mot de passe: </label>
                 <input class="form-control" type="password" id="password" name="password"></input>
             </div>
+            <div class="form-group">
+                <label for="group">Équipe</label>
+                <div class="btn-group btn-group-toggle d-flex" data-toggle="buttons">
+                    {{#groups}}
+                        <label class="btn btn-secondary w-100">
+                            <input type="radio" name="group" value="{{id}}" autocomplete="off">
+                            <span style="color:{{color}}">{{name}}</span>
+                        </label>
+                    {{/groups}}
+                </div>
+            </div>
+
             <input type="submit" class="btn btn-primary btn-lg btn-block" value="S'inscrire"></input>
         </form>
     </div>
