@@ -18,6 +18,7 @@ module.exports = {
             token: process.env.TELEGRAM_TOKEN,
             publicChatId: "-280766905",
             adminChatId: "-280766905",
+            minQuestRarity: 4,
         }
     },
     production: {
@@ -39,6 +40,7 @@ module.exports = {
             token: process.env.TELEGRAM_TOKEN,
             publicChatId: process.env.TELEGRAM_PUBLIC_CHAT_ID,
             adminChatId: process.env.TELEGRAM_ADMIN_CHAT_ID,
+            minQuestRarity: 4,
         }
     }
 };

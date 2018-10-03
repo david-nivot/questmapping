@@ -95,7 +95,9 @@ module.exports = {
 
                 if(bot.isActive) {
                     var quest = await Quest.findOne({ where: { id: req.query.quest } });
-                    bot.sendPublicMessage("NewQuest", [poi.name, quest.goal, quest.reward, target]);
+                    if(quest.rarity >= config.telegram.minQuestRarity) {
+                        bot.sendPublicMessage("NewQuest", [poi.name, quest.goal, quest.reward, target]);
+                    }
                 }
 
                 res.locals = {

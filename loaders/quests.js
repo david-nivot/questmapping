@@ -19,7 +19,7 @@ function processQuestRow( row ) {
             parent = row.id;
             sequelize_fixtures.loadFixture({ model: 'QuestGroup', data }, models);
         }
-        var data = { id: row.id, goal: row.goal, reward: row.reward, QuestGroupId: parent };
+        var data = { id: row.id, goal: row.goal, reward: row.reward, rarity: row.rarity, QuestGroupId: parent };
         sequelize_fixtures.loadFixture({ model: 'Quest', data }, models);
     }
 
