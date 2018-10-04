@@ -8,9 +8,14 @@ module.exports = (sequelize, type) => {
             autoIncrement: true
         },
         name: { type: type.STRING, allowNull: false },
+        role: { type: type.STRING, allowNull: true },
         password: { type: type.STRING, allowNull: false },
         credentials: { type: type.TINYINT, allowNull: false, defaultValue: 1 },
         privacy: { type: type.TINYINT, allowNull: false, defaultValue: 0 },
+        scoreDay: { type: type.INTEGER, allowNull: false, defaultValue: 0 },
+        scoreWeek: { type: type.INTEGER, allowNull: false, defaultValue: 0 },
+        scoreMonth: { type: type.INTEGER, allowNull: false, defaultValue: 0 },
+        scoreLife: { type: type.INTEGER, allowNull: false, defaultValue: 0 },
     });
 
     User.beforeCreate( async function(user) {
