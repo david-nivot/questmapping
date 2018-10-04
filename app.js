@@ -47,6 +47,7 @@ app.use(flash());
 function checkAuth (req, res, next) {
 
     // CREDENTIALS
+    // 0  : banned User
     // 1  : unverified User
     // 2  : verified basic User
     // 3+ : admin

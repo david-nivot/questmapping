@@ -4,29 +4,31 @@
     {{> head }}
 </head>
 <body>
-    <div class="container align-middle">
-        <h1>Connexion</h1>
-        <br/>
-        {{#flash}}
-        <div class="alert alert-danger">
-            <strong>Erreur!</strong> {{flash}}
-        </div>
-        {{/flash}}
-
-        <form id="form-login" action="/login" method="post">
-            <div class="form-group">
-                <label for="login">Pseudo: </label>
-                <input class="form-control" type="text" id="login" name="login"></input>
+    <div class="content">
+        <div class="container align-middle">
+            <h1>Connexion</h1>
+            <br/>
+            {{#flash}}
+            <div class="alert alert-danger">
+                <strong>Erreur!</strong> {{flash}}
             </div>
-            <div class="form-group">
-                <label for="password">Mot de passe: </label>
-                <input class="form-control" type="password" id="password" name="password"></input>
-            </div>
-            <input type="submit" class="btn btn-primary btn-lg btn-block" value="Connexion"></input>
-        </form>
+            {{/flash}}
 
-        <div class="form-group">
-            Pas encore inscrit? <a href="register">S'inscrire</a>
+            <form id="form-login" action="/login" method="post">
+                <div class="form-group">
+                    <label for="login">Pseudo: </label>
+                    <input class="form-control" type="text" id="login" name="login"></input>
+                </div>
+                <div class="form-group">
+                    <label for="password">Mot de passe: </label>
+                    <input class="form-control" type="password" id="password" name="password"></input>
+                </div>
+                <input type="submit" class="btn btn-primary btn-lg btn-block" value="Connexion"></input>
+            </form>
+
+            <div class="form-group">
+                Pas encore inscrit? <a href="register">S'inscrire</a>
+            </div>
         </div>
     </div>
 </body>

@@ -4,6 +4,7 @@ const Quest = require('../models').Quest;
 const Report = require('../models').Report;
 const sequelize = require('../models').sequelize;
 const bot = require("./bot");
+const View = require('../views');
 
 const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.js')[env];
@@ -64,9 +65,10 @@ module.exports = {
         var poi = await Poi.findOne({ where: { id :req.params.id } });
 
         if(!poi) {
-            res.locals.message = "Lieu non existant";
             res.status(404);
-            res.render('pages/error');
+            View.render(req, res, 'pages/error', {
+                message: "Lieu non existant"
+            });
             return;
         }
 
@@ -75,20 +77,18 @@ module.exports = {
             include: [ {
                 model: Quest
             } ],
-        })
+        });
+        var target = config.frontUrl + "#17/" + poi.latitude + "/" + poi.longitude;
 
         //Si un rapport existe déjà
         if (report) {
-            res.locals = {
-                target: config.frontUrl + "#17/" + poi.latitude + "/" + poi.longitude,
+            View.render(req, res, 'pages/member/poi/report/result', {
+                target,
                 message: "Un signalement existe déjà pour ce lieu."
-            }
-            res.render('pages/member/poi/report/result', { partials: {head: 'partials/head'}});
+            });
         } else {
             //Si une quête a été selectionnée
             if(req.query.quest) {
-                var target = config.frontUrl + "#17/" + poi.latitude + "/" + poi.longitude;
-
                 report = await Report.create({
                     PoiId: req.params.id, QuestId: req.query.quest, UserId: req.session.userid
                 });
@@ -100,19 +100,15 @@ module.exports = {
                     }
                 }
 
-                res.locals = {
+                View.render(req, res, 'pages/member/poi/report/result', {
                     target,
-                    message: report
-                        ? "Enregistrement terminé."
-                        : "Echec de la création du signalement."
-                }
-                res.render('pages/member/poi/report/result', { partials: {head: 'partials/head'}});
+                    message: report ? "Enregistrement terminé." : "Echec de la création du signalement."
+                });
             } else {
                 var quests = await fetchQuests(req.query.group);
-                res.locals = {
+                View.render(req, res, 'pages/member/poi/report/create', {
                     quests,
-                }
-                res.render('pages/member/poi/report/create', { partials: {head: 'partials/head'}});
+                });
             }
         }
     }

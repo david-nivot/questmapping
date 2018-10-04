@@ -1,0 +1,7 @@
+<nav class="navbar navbar-bottom fixed-bottom" role="navigation">
+    <div class="container">
+        <a class="nav-link mx-auto" href="{{contact}}">
+            Contact
+        </a>
+    </div>
+</nav>

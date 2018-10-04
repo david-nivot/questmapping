@@ -4,22 +4,26 @@
     {{> head }}
 </head>
 <body>
-    <div class="container">
-        {{#quests}}
-        <a class="row btn-quest align-middle {{#isGroup}}btn-quest-group{{/isGroup}}" href="{{uri}}">
-            <div class="col-10">
-            {{#isGroup}}
-            {{name}}
-            {{/isGroup}}
-            {{^isGroup}}
-            {{goal}} ({{reward}})
-            {{/isGroup}}
-            </div>
-            <div class="col-2 img-quest">
-                <img src="{{icon}}">
-            </div>
-        </a>
-        {{/quests}}
+    {{> header }}
+    <div class="content">
+        <div class="container">
+            {{#quests}}
+            <a class="row btn-quest align-middle {{#isGroup}}btn-quest-group{{/isGroup}}" href="{{uri}}">
+                <div class="col-10">
+                    {{#isGroup}}
+                    {{name}}
+                    {{/isGroup}}
+                    {{^isGroup}}
+                    {{goal}} ({{reward}})
+                    {{/isGroup}}
+                </div>
+                <div class="col-2 img-quest">
+                    <img src="{{icon}}">
+                </div>
+            </a>
+            {{/quests}}
+        </div>
     </div>
+    {{> footer }}
 </body>
 </html>

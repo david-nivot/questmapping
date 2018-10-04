@@ -1,13 +1,21 @@
 const User = require('../models').User;
 const UserGroup = require('../models').UserGroup;
+const View = require('../views');
+
+async function saveUserOnSession(req, user) {
+    var group = await UserGroup.findOne({ where: { id: user.UserGroupId } });
+    req.session.userid = user.id;
+    req.session.username = user.name;
+    req.session.credentials = user.credentials; //TODO Refresh creds from DB
+    req.session.usercolor = group.color;
+}
 
 module.exports = {
 
     login(req, res) {
-        res.locals = {
+        View.render(req, res, 'pages/login', {
             flash: req.flash('error')
-        }
-        res.render('pages/login', { partials: {head: 'partials/head'} });
+        });
     },
 
     doLogin(req, res) {
@@ -16,21 +24,24 @@ module.exports = {
                 req.flash('error', 'Identifiant ou mot de passe incorrect.');
                 res.redirect('/login');
             } else {
-                req.session.userid = user.id;
-                req.session.username = user.name;
-                req.session.credentials = user.credentials;
+                await saveUserOnSession(req, user);
                 res.redirect(req.session.origin || "/");
             }
         });
     },
 
+    logout(req, res) {
+        req.session.destroy( (err) => {
+            return res.redirect('/login');
+        });
+    },
+
     async register(req, res) {
         var groups = await UserGroup.findAll();
-        res.locals = {
+        View.render(req, res, 'pages/register', {
             groups,
             flash: req.flash('error')
-        }
-        res.render('pages/register', { partials: {head: 'partials/head'} });
+        });
     },
 
     doRegister(req, res) {
@@ -52,14 +63,12 @@ module.exports = {
             where: { name: req.body.login },
             defaults: { password: req.body.password, UserGroupId: req.body.group }
         })
-        .spread(function(user, created) {
+        .spread(async function(user, created) {
             if(!created) {
                 req.flash('error', 'Cet utilisateur existe déjà.');
                 res.redirect('/register');
             } else {
-                req.session.userid = user.id;
-                req.session.username = user.name;
-                req.session.credentials = user.credentials;
+                await saveUserOnSession(req, user);
                 res.redirect(req.session.origin || "/");
             }
         })

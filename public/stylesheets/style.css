@@ -1,12 +1,39 @@
 body {
-    padding: 50px 15px 20px 15px;
     font-family: "Lato", Helvetica, Arial, sans-serif;
     background-color: rgb(59, 59, 59);
     color: white;
+    height: 100%;
 }
 
 a {
     color: #00B7FF;
+}
+
+.navbar {
+    background-color: black;
+}
+
+.navbar-top {
+    border-bottom: 1px solid #fff;
+    height: 45px;
+}
+
+.navbar-bottom {
+    border-top: 1px solid #fff;;
+    height: 35px;
+    font-size: 14px;
+}
+
+.nav-link {
+    color: white;
+}
+
+.content {
+    padding: 50px 5px 40px 5px;
+}
+
+.modal-title {
+    color: black;
 }
 
 @media screen and (min-width: 601px) {
