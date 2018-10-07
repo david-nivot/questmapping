@@ -73,7 +73,7 @@ module.exports = {
         }
 
         var report = await Report.findOne({
-            where: { PoiId: req.params.id },
+            where: { PoiId: req.params.id, hasError: false },
             include: [ {
                 model: Quest
             } ],

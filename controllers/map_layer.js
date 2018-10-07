@@ -47,7 +47,7 @@ module.exports = {
             include: {
                 model: Report,
                 attributes: ["id", "createdAt"],
-                where: { ShadowId: { $eq: null } },
+                where: { hasError: false },
                 include: {
                     model: Quest,
                     required: true,

@@ -4,7 +4,8 @@ module.exports = (sequelize, type) => {
             type: type.INTEGER,
             primaryKey: true,
             autoIncrement: true
-        }
+        },
+        hasError: { type: type.BOOLEAN, allowNull: false, defaultValue: false },
     });
 
     Report.associate = function (models) {
@@ -23,13 +24,6 @@ module.exports = (sequelize, type) => {
         models.Report.belongsTo(models.User, {
             onDelete: "SET NULL",
             foreignKey: {
-                allowNull: true
-            }
-        });
-        models.Report.hasOne(models.Report, {
-            onDelete: "SET NULL",
-            foreignKey: {
-                name: 'ShadowId',
                 allowNull: true
             }
         });

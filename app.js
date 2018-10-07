@@ -18,6 +18,7 @@ var adminRouter = require('./routes/admin');
 const env = process.env.NODE_ENV || 'development';
 
 require('moment').tz.setDefault('Europe/Paris');
+require('./scheduler').init('Europe/Paris');
 
 var app = express();
 
