@@ -12,7 +12,7 @@ const adminChatId = config.telegram.adminChatId;
 const bot = token ? new TelegramBot(token, {polling: true}) : null;
 
 if (bot){
-    bot.sendMessage(adminChatId, "_Démarrage du serveur_", { parse_mode: "Markdown" });
+    bot.sendMessage(adminChatId, "Démarrage du serveur\n_Version "+ process.env.npm_package_version +"_", { parse_mode: "Markdown" });
     bot.on('message', (msg) => {
     });
 }
