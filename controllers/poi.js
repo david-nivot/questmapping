@@ -62,18 +62,18 @@ function getImageLink( id ) {
 module.exports = {
     async createReport(req, res) {
 
-        var poi = await Poi.findOne({ where: { id :req.params.id } });
+        var poi = await Poi.findOne({ where: { id: req.params.id } });
 
         if(!poi) {
-            res.status(404);
-            View.render(req, res, 'pages/error', {
+            View.render(req, res, 'pages/message', {
+                class: "text-danger",
                 message: "Lieu non existant"
             });
             return;
         }
 
         var report = await Report.findOne({
-            where: { PoiId: req.params.id, hasError: false },
+            where: { PoiId: req.params.id, EditorId: { $eq: null } },
             include: [ {
                 model: Quest
             } ],
@@ -82,8 +82,9 @@ module.exports = {
 
         //Si un rapport existe déjà
         if (report) {
-            View.render(req, res, 'pages/member/poi/report/result', {
+            View.render(req, res, 'pages/message', {
                 target,
+                class: "text-danger",
                 message: "Un signalement existe déjà pour ce lieu."
             });
         } else {
@@ -100,13 +101,13 @@ module.exports = {
                     }
                 }
 
-                View.render(req, res, 'pages/member/poi/report/result', {
+                View.render(req, res, 'pages/message', {
                     target,
                     message: report ? "Enregistrement terminé." : "Echec de la création du signalement."
                 });
             } else {
                 var quests = await fetchQuests(req.query.group);
-                View.render(req, res, 'pages/member/poi/report/create', {
+                View.render(req, res, 'pages/member/createReport', {
                     quests,
                 });
             }

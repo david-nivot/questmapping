@@ -12,6 +12,7 @@ module.exports = {
     render(req, res, page, locals) {
         res.locals = locals;
         res.locals.contact = config.contact;
+        res.locals.frontUrl = config.frontUrl;
         res.locals.user = req.session && {
             name: req.session.username,
             color: req.session.usercolor,

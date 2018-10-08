@@ -1,5 +1,5 @@
 <nav class="navbar navbar-top fixed-top" role="navigation">
-    <a class="navbar-brand" href="#">
+    <a class="navbar-brand" href="{{frontUrl}}">
         <img src="/images/logo_white.png" width="32" height="32" alt="logo">
     </a>
     {{#user}}
