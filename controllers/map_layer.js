@@ -15,10 +15,9 @@ module.exports = {
                 required: false,
                 attributes: []
             },
-            where: sequelize.where(
-                sequelize.col('Reports.PoiId'),
-                'IS',
-                null
+            where: sequelize.or(
+                sequelize.where(sequelize.col('Reports.PoiId'), { $is: null }),
+                sequelize.where(sequelize.col('Reports.EditorId'), { $not: null }),
             )
         }).then(pois => {
             let sb = new StringBuilder();
