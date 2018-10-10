@@ -27,7 +27,7 @@ async function sendMessage(chat, kind, params) {
             var row = sentences[Math.floor(Math.random()*sentences.length)];
             var sb = new StringBuilder();
             sb.appendFormat(row.sentence, ...params);
-            bot.sendMessage(publicChatId, sb.toString(), { parse_mode: "Markdown" });
+            bot.sendMessage(chat, sb.toString(), { parse_mode: "Markdown" });
         }
     }
 }
