@@ -6,8 +6,7 @@ const sequelize = require('../models').sequelize;
 const bot = require("./bot");
 const View = require('../views');
 
-const env = process.env.NODE_ENV || 'development';
-const config = require(__dirname + '/../config/config.js')[env];
+const config = require(__dirname + '/../config/config.js');
 
 async function fetchQuests(group) {
 

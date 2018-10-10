@@ -34,7 +34,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //Init session
 app.use(session({
-    secret: config[env].session.secret,
+    secret: config.session.secret,
     store: new SequelizeStore({
         db: models.sequelize
     }),
