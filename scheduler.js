@@ -6,7 +6,7 @@ module.exports = {
     init(timezone) {
 
         //Daily reset
-        new CronJob('30 59 23 * * *', function() {
+        new CronJob('45 59 23 * * *', function() {
             ReportController.scheduledReset();
         }, null, true, timezone);
 

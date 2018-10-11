@@ -10,6 +10,7 @@ var config = require('./config/config.js');
 
 var SequelizeStore = require('connect-session-sequelize')(session.Store);
 
+var checkAuth = require('./routes/auth');
 var indexRouter = require('./routes/index');
 var publicRouter = require('./routes/public');
 var memberRouter = require('./routes/member');
@@ -40,38 +41,11 @@ app.use(session({
     }),
     resave: false,
     saveUninitialized: false,
-    proxy: true
+    proxy: true,
+    cookie: { maxAge: 259200000 },
 }));
 
 app.use(flash());
-
-function checkAuth (req, res, next) {
-
-    // CREDENTIALS
-    // 0  : banned User
-    // 1  : unverified User
-    // 2  : verified basic User
-    // 3+ : admin
-
-    if (req.url.startsWith('/admin')) {
-        if (!req.session.credentials) {
-            return res.redirect('/login');
-        } else if(req.session.credentials < 3) {
-            return res.redirect('/credentials');
-        }
-    }
-
-    if (req.url.startsWith('/member')) {
-        if (!req.session.credentials) {
-            req.session.origin = req.url;
-            return res.redirect('/login');
-        } else if(req.session.credentials < 2) {
-            return res.redirect('/credentials');
-        }
-    }
-
-    next();
-}
 
 app.use(checkAuth);
 app.use('/', indexRouter);

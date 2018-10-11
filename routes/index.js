@@ -9,9 +9,21 @@ router.get('/', function(req, res, next) {
     });
 });
 
-router.get('/credentials', function(req, res, next) {
+router.get('/credentials', async function(req, res, next) {
+    var admins = await UserController.getAdminList(req, res);
     View.render(req, res, 'pages/credentials', {
-        title: 'Droits insuffisants'
+        title: 'Droits insuffisants',
+        message: "Veuillez vous rapprocher d'un administrateur pour que votre compte soit validé.",
+        admins,
+    });
+});
+
+router.get('/suspended', async function(req, res, next) {
+    var admins = await UserController.getAdminList(req, res);
+    View.render(req, res, 'pages/credentials', {
+        title: 'Compte suspendu',
+        message: "Veuillez contacter un administrateur pour de plus amples informations.",
+        admins,
     });
 });
 

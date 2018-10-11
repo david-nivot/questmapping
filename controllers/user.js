@@ -6,7 +6,7 @@ async function saveUserOnSession(req, user) {
     var group = await UserGroup.findOne({ where: { id: user.UserGroupId } });
     req.session.userid = user.id;
     req.session.username = user.name;
-    req.session.credentials = user.credentials; //TODO Refresh creds from DB
+    req.session.credentials = user.credentials;
     req.session.usercolor = group.color;
 }
 
@@ -73,5 +73,22 @@ module.exports = {
             }
         })
     },
+
+    async refreshCredentials(req, res) {
+        if( req.session.userid ) {
+            var user = await User.findOne({
+                where: { id: req.session.userid }
+            });
+            req.session.credentials = user.credentials;
+        }
+
+    },
+
+    async getAdminList(req, res) {
+        return await User.findAll({
+            where: { credentials: { $gte: 3 } },
+            order: [ 'name' ],
+        });
+    }
 
 }
