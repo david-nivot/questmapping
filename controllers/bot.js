@@ -20,7 +20,7 @@ if (bot){
     });
 }
 
-async function sendMessage(chat, kind, params) {
+async function sendMessage(chat, kind, params=[]) {
     if (bot) {
         var sentences = await BotLine.findAll({ where: { kind } });
         if( sentences.length > 0 ) {
@@ -36,6 +36,13 @@ module.exports = {
 
     isActive: function() {
         return bot !== null;
+    },
+
+    sayHello: function(req, res) {
+        sendMessage(publicChatId, "SayWelcome#1#1");
+        sendMessage(publicChatId, "SayWelcome#1#2");
+        sendMessage(publicChatId, "SayWelcome#1#3");
+        return res.redirect('/admin');
     },
 
     sendPublicMessage: function(kind, params) {

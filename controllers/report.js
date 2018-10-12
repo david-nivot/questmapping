@@ -16,7 +16,7 @@ async function deleteAll() {
 
 module.exports = {
 
-    async listErrors(req, res) {
+    async getErrorList(req, res) {
 
         var errors = await Report.findAll({
             where: { EditorId: { $ne: null } },
