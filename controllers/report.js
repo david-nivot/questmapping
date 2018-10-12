@@ -1,5 +1,7 @@
+const moment = require('moment');
 const Report = require('../models').Report;
 const User = require('../models').User;
+const UserGroup = require('../models').UserGroup;
 const Poi = require('../models').Poi;
 const bot = require("./bot");
 const View = require('../views');
@@ -13,6 +15,45 @@ async function deleteAll() {
 }
 
 module.exports = {
+
+    async listErrors(req, res) {
+
+        var errors = await Report.findAll({
+            where: { EditorId: { $ne: null } },
+            attributes: ["id", "createdAt", "updatedAt"],
+            include: [
+                {
+                    model: User,
+                    attributes: ["name"],
+                    include: { model: UserGroup, attributes: ["color"] },
+                }, {
+                    model: User, as: "Editor",
+                    attributes: ["name"],
+                    include: { model: UserGroup, attributes: ["color"] },
+                }, {
+                    model: Poi,
+                    attributes: ["name"],
+                }
+            ]
+        });
+        errors = errors.map( e => {
+            return {
+                id: e.id,
+                createdAt: moment(e.createdAt).format("DD/MM à HH:mm"),
+                updatedAt: moment(e.updatedAt).format("DD/MM à HH:mm"),
+                username: e.User.name,
+                usercolor: e.User.UserGroup.color,
+                poi: e.Poi.name,
+                editorname: e.Editor.name,
+                editorcolor: e.Editor.UserGroup.color,
+                canDelete: req.session.credentials >= 5,
+            }
+        });
+        View.render(req, res, 'pages/admin/errorList', {
+            title: "Erreurs signalées",
+            errors
+        });
+    },
 
     async reset(req, res) {
         var count = await deleteAll();
@@ -57,8 +98,9 @@ module.exports = {
 
     },
 
-    delete(req, res) {
-        Report.destroy({ where: { id: req.params.id } });
+    async delete(req, res) {
+        await Report.destroy({ where: { id: req.params.id } });
+        return res.redirect('/admin/report/errors');
     },
 
 }

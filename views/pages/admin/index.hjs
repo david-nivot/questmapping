@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {{> head }}
+</head>
+<body>
+    {{> header }}
+    <div class="content mx-3">
+        <h2 class="mb-5">{{title}}</h2>
+        <a href="/admin/members" class="btn btn-secondary btn-block">
+            Gérer les membres
+        </a>
+        <a href="/admin/report/errors" class="btn btn-secondary btn-block">
+            Erreurs signalées
+        </a>
+
+        {{#isAdmin4}}
+        <a href="/admin/bot" class="btn btn-secondary btn-block">
+            Commandes bot
+        </a>
+        {{/isAdmin4}}
+
+        {{#isAdmin5}}
+        <a href="/admin/commands" class="btn btn-secondary btn-block">
+            Commandes serveur
+        </a>
+        {{/isAdmin5}}
+
+        <hr />
+
+        <a href="{{target}}" class="btn btn-secondary btn-block">
+            Retour à la carte
+        </a>
+    </div>
+    {{> footer }}
+</body>
+</html>

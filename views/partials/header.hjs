@@ -26,9 +26,16 @@
                 </button>
             </div>
             <div class="modal-body">
+                {{#user}}
+                {{#isAdmin}}
+                <a href="/admin" class="btn btn-dark btn-sm">
+                    Administration
+                </a>
+                {{/isAdmin}}
                 <a href="/logout" class="btn btn-dark btn-sm">
                     Déconnexion
                 </a>
+                {{/user}}
             </div>
         </div>
     </div>

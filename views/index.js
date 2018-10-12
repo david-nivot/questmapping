@@ -15,6 +15,7 @@ module.exports = {
         res.locals.user = req.session && {
             name: req.session.username,
             color: req.session.usercolor,
+            isAdmin: req.session.credentials > 2,
         }
         res.render(page, { partials });
     },

@@ -102,3 +102,13 @@ a {
 .btn-group>label {
     border: 1px solid #454545;
 }
+
+.list-block {
+    color: #636363;
+    background-color: #f7fcf6;
+    padding: 5px;
+    border: 1px solid black;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: lighter;
+}
