@@ -27,7 +27,7 @@ async function sendMessage(chat, kind, params=[]) {
             var row = sentences[Math.floor(Math.random()*sentences.length)];
             var sb = new StringBuilder();
             sb.appendFormat(row.sentence, ...params);
-            bot.sendMessage(chat, sb.toString(), { parse_mode: "Markdown" });
+            await bot.sendMessage(chat, sb.toString(), { parse_mode: "Markdown" });
         }
     }
 }
@@ -38,10 +38,10 @@ module.exports = {
         return bot !== null;
     },
 
-    sayHello: function(req, res) {
-        sendMessage(publicChatId, "SayWelcome#1#1");
-        sendMessage(publicChatId, "SayWelcome#1#2");
-        sendMessage(publicChatId, "SayWelcome#1#3");
+    sayHello: async function(req, res) {
+        await sendMessage(publicChatId, "SayWelcome#1#1");
+        await sendMessage(publicChatId, "SayWelcome#1#2");
+        await sendMessage(publicChatId, "SayWelcome#1#3");
         return res.redirect('/admin');
     },
 
