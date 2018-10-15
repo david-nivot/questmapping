@@ -1,6 +1,8 @@
+const moment = require('moment');
 const User = require('../models').User;
 const UserGroup = require('../models').UserGroup;
 const View = require('../views');
+const bot = require("./bot");
 
 async function saveUserOnSession(req, user) {
     var group = await UserGroup.findOne({ where: { id: user.UserGroupId } });
@@ -69,6 +71,7 @@ module.exports = {
                 res.redirect('/register');
             } else {
                 await saveUserOnSession(req, user);
+                bot.sendAdminMessage("NewUser", [user.name]);
                 res.redirect(req.session.origin || "/");
             }
         })
@@ -89,6 +92,81 @@ module.exports = {
             where: { credentials: { $gte: 3 } },
             order: [ 'name' ],
         });
-    }
+    },
+
+    async getPendingUsers(req, res) {
+        var users = await User.findAll({
+            where: { credentials: { $eq: 1 } },
+            include: [UserGroup],
+            order: [ ['createdAt', 'DESC'] ],
+        });
+
+        users = users.map( u => {
+            return {
+                userid: u.id,
+                username: u.name,
+                usercolor: u.UserGroup.color,
+                createdAt: moment(u.createdAt).format("DD/MM à HH:mm"),
+                value: 2 //credentials value
+            }
+        });
+
+        View.render(req, res, 'pages/admin/users', {
+            title: "Autorisation des utilisateurs",
+            actionLabel: "Autoriser",
+            actionValue: "credentials",
+            users,
+        });
+    },
+
+    async getBannedUsers(req, res) {
+        var users = await User.findAll({
+            where: { credentials: { $eq: 0 } },
+            include: [UserGroup],
+            order: [ ['createdAt', 'DESC'] ],
+        });
+
+        users = users.map( u => {
+            return {
+                userid: u.id,
+                username: u.name,
+                usercolor: u.UserGroup.color,
+                createdAt: moment(u.createdAt).format("DD/MM à HH:mm"),
+                value: 2 //credentials value
+            }
+        });
+
+        View.render(req, res, 'pages/admin/users', {
+            title: "Débannir un utilisateur",
+            actionLabel: "Débannir",
+            actionValue: "credentials",
+            users,
+        });
+    },
+
+    async updateUser(req, res) {
+        if (req.body.credentials !== undefined) {
+            if (req.body.credentials >= req.session.credentials) {
+                return View.render(req, res, 'pages/message', {
+                    class: "text-danger",
+                    message: "Droits insuffisants pour éditer cet utilisateur."
+                });
+            } else {
+                var user = await User.findOne({
+                    where: { id: req.params.id },
+                });
+                if(user) {
+                    await user.update({ credentials: req.body.credentials });
+                    bot.sendAdminMessage("UserCredentialsUpdated", [user.name, req.session.username, req.body.credentials]);
+                } else {
+                    return View.render(req, res, 'pages/message', {
+                        class: "text-danger",
+                        message: "Utilisateur inexistant.",
+                    });
+                }
+            }
+        }
+        res.redirect(req.header('Referer') || '/admin');
+    },
 
 }

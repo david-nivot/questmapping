@@ -13,6 +13,7 @@ module.exports = {
         port:process.env.DB_PORT,
         dialect: 'mysql',
         timezone: process.env.APP_TIMEZONE,
+        logging: process.env.NODE_ENV === 'production' ? false : console.log,
     },
     session: {
         secret: process.env.SESSION_SECRET,

@@ -1,6 +1,6 @@
 {
   "name": "questmapping",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "",
   "scripts": {
     "start": "node ./bin/www",

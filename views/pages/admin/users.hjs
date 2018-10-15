@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {{> head }}
+</head>
+<body>
+    {{> header }}
+    <div class="content">
+        <h3>{{title}}</h3>
+        <br/>
+
+        <table class="table table-striped table-dark font-smaller">
+            <thead>
+                <tr>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Inscription</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#users}}
+                <tr>
+                    <td style="color:{{usercolor}}">{{username}}</td>
+                    <td>{{createdAt}}</td>
+                    <td>
+                        <form action="/admin/user/update/{{userid}}" method="post">
+                            <input type="hidden" name="{{actionValue}}" value="{{value}}">
+                            <input type="submit" class="btn btn-success btn-sm" value="{{actionLabel}}"/>
+                        </form>
+                    </td>
+                </tr>
+                {{/users}}
+            </tbody>
+        </table>
+
+        <div class="d-flex justify-content-center my-4">
+            <a href="/admin" class="btn btn-secondary btn-lg btn-block">
+                Retour
+            </a>
+        </div>
+
+    </div>
+    {{> footer }}
+</body>
+</html>

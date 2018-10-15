@@ -13,11 +13,12 @@ router.get('/', function(req, res, next) {
     });
 });
 
-//router.get("/users", UserController.getUsers);
-//router.get("/user/:id", UserController.getUser);
-//router.post("/user/search/", UserController.searchUser);
-router.get("/report/errors", ReportController.getErrorList);
-router.get("/bot", BotController.sayHello);
+router.get("/users/pending", UserController.getPendingUsers);
+router.get("/users/banned", UserController.getBannedUsers);
+router.post("/user/update/:id", UserController.updateUser);
+
+router.get("/reports/error", ReportController.getErrorList);
+//router.get("/bot", BotController.);
 //router.get("/commands", );
 
 router.get("/report/reset", ReportController.reset);

@@ -24,7 +24,7 @@ module.exports = {
             include: [
                 {
                     model: User,
-                    attributes: ["name"],
+                    attributes: ["id", "name", "credentials"],
                     include: { model: UserGroup, attributes: ["color"] },
                 }, {
                     model: User, as: "Editor",
@@ -41,7 +41,9 @@ module.exports = {
                 id: e.id,
                 createdAt: moment(e.createdAt).format("DD/MM à HH:mm"),
                 updatedAt: moment(e.updatedAt).format("DD/MM à HH:mm"),
+                userid: e.User.id,
                 username: e.User.name,
+                userIsBanned: e.User.credentials === 0,
                 usercolor: e.User.UserGroup.color,
                 poi: e.Poi.name,
                 editorname: e.Editor.name,
