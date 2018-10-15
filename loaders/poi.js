@@ -19,11 +19,9 @@ request.get(process.argv[2], function (error, response, body) {
             cleanPoiFromDB()
             .then(function() {
                 json.forEach(processPoiRow);
-                process.exit();
             })
             .catch(function(error) {
                 console.error(error);
-                process.exit(1);
             });
         })
     }

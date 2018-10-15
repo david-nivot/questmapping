@@ -19,11 +19,9 @@ request.get(process.argv[2], function (error, response, body) {
             cleanFromDB()
             .then(function() {
                 json.forEach(processRow);
-                process.exit();
             })
             .catch(function(error) {
                 console.error(error);
-                process.exit(1);
             });
         })
     }

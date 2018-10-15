@@ -19,11 +19,9 @@ request.get(process.argv[2], function (error, response, body) {
             cleanBotLinesFromDB()
             .then(function() {
                 json.forEach(processBotLineRow);
-                process.exit();
             })
             .catch(function(error) {
                 console.error(error);
-                process.exit(1);
             });
         })
     }

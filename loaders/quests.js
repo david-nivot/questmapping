@@ -33,11 +33,9 @@ request.get(process.argv[2], function (error, response, body) {
             cleanQuestsFromDB()
             .then(function() {
                 json.forEach(processQuestRow);
-                process.exit();
             })
             .catch(function(error) {
                 console.error(error);
-                process.exit(1);
             });
         })
     }
