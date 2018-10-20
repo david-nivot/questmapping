@@ -7,13 +7,13 @@
     {{> header }}
     <div class="content mx-3">
         <h2 class="mb-5">{{title}}</h2>
-        <a href="/admin/users/pending" class="btn btn-secondary btn-block">
+        <a href="/admin/user/pending" class="btn btn-secondary btn-block">
             Autoriser un utilisateur
         </a>
-        <a href="/admin/reports/error" class="btn btn-secondary btn-block">
+        <a href="/admin/report/errors" class="btn btn-secondary btn-block">
             Erreurs signalées
         </a>
-        <a href="/admin/users/banned" class="btn btn-secondary btn-block">
+        <a href="/admin/user/banned" class="btn btn-secondary btn-block">
             Débannir un utilisateur
         </a>
 

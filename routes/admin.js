@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var auth = require('./auth');
 var ReportController = require('../controllers/report');
 var UserController = require('../controllers/user');
 var BotController = require('../controllers/bot');
@@ -13,15 +14,22 @@ router.get('/', function(req, res, next) {
     });
 });
 
-router.get("/users/pending", UserController.getPendingUsers);
-router.get("/users/banned", UserController.getBannedUsers);
-router.post("/user/update/:id", UserController.updateUser);
+router.get("/user/pending", auth.authorize(UserController.getPendingUsers, 3));
+router.get("/user/banned", auth.authorize(UserController.getBannedUsers, 3));
+router.post("/user/update/:id", auth.authorize(UserController.updateUser, 3));
 
-router.get("/reports/error", ReportController.getErrorList);
+router.get("/report/errors", auth.authorize(ReportController.getErrorList, 3));
 //router.get("/bot", BotController.);
 //router.get("/commands", );
 
-router.get("/report/reset", ReportController.reset);
-router.get("/report/delete/:id", ReportController.delete);
+router.get('/commands', auth.authorize(function(req, res, next) {
+    View.render(req, res, 'pages/admin/commands', {
+        title: 'Commandes admin',
+        isSuperAdmin: req.session.credentials >= 6,
+    });
+}, 3));
+
+router.get("/report/reset", auth.authorize(ReportController.reset, 5));
+router.get("/report/delete/:id", auth.authorize(ReportController.delete, 5));
 
 module.exports = router;

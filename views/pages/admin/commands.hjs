@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {{> head }}
+</head>
+<body>
+    {{> header }}
+    <div class="content mx-3">
+        
+        <hr />
+
+        <a href="{{target}}" class="btn btn-secondary btn-block">
+            Retour à la carte
+        </a>
+    </div>
+    {{> footer }}
+</body>
+</html>

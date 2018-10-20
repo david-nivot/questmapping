@@ -10,7 +10,7 @@ var config = require('./config/config.js');
 
 var SequelizeStore = require('connect-session-sequelize')(session.Store);
 
-var checkAuth = require('./routes/auth');
+var auth = require('./routes/auth');
 var indexRouter = require('./routes/index');
 var publicRouter = require('./routes/public');
 var memberRouter = require('./routes/member');
@@ -47,7 +47,7 @@ app.use(session({
 
 app.use(flash());
 
-app.use(checkAuth);
+app.use(auth.checkAuth);
 app.use('/', indexRouter);
 app.use('/public', publicRouter);
 app.use('/member', memberRouter);

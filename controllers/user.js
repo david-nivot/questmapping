@@ -146,24 +146,24 @@ module.exports = {
 
     async updateUser(req, res) {
         if (req.body.credentials !== undefined) {
-            if (req.body.credentials >= req.session.credentials) {
-                return View.render(req, res, 'pages/message', {
-                    class: "text-danger",
-                    message: "Droits insuffisants pour éditer cet utilisateur."
-                });
-            } else {
-                var user = await User.findOne({
-                    where: { id: req.params.id },
-                });
-                if(user) {
-                    await user.update({ credentials: req.body.credentials });
-                    bot.sendAdminMessage("UserCredentialsUpdated", [user.name, req.session.username, req.body.credentials]);
-                } else {
+            var user = await User.findOne({
+                where: { id: req.params.id },
+            });
+            if (user) {
+                if (user.credentials >= req.session.credentials) {
                     return View.render(req, res, 'pages/message', {
                         class: "text-danger",
-                        message: "Utilisateur inexistant.",
+                        message: "Droits insuffisants pour éditer cet utilisateur."
                     });
+                } else {
+                    await user.update({ credentials: req.body.credentials });
+                    bot.sendAdminMessage("UserCredentialsUpdated", [user.name, req.session.username, req.body.credentials]);
                 }
+            } else {
+                return View.render(req, res, 'pages/message', {
+                    class: "text-danger",
+                    message: "Utilisateur inexistant.",
+                });
             }
         }
         res.redirect(req.header('Referer') || '/admin');
