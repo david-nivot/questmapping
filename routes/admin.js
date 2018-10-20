@@ -4,6 +4,7 @@ var auth = require('./auth');
 var ReportController = require('../controllers/report');
 var UserController = require('../controllers/user');
 var BotController = require('../controllers/bot');
+var maplock = require('../lock');
 const View = require('../views');
 
 router.get('/', function(req, res, next) {
@@ -34,7 +35,18 @@ router.get('/commands', auth.authorize(function(req, res, next) {
     View.render(req, res, 'pages/admin/commands', {
         title: 'Commandes admin',
         isSuperAdmin: req.session.credentials >= 6,
+        MapStatus: maplock.get() ? "oui" : "non",
     });
+}, 5));
+
+//Temporary code to lock map
+router.get("/commands/lock", auth.authorize( (req, res) => {
+    maplock.set(true);
+    res.redirect(req.header('Referer') || '/admin');
+}, 5));
+router.get("/commands/unlock", auth.authorize( (req, res) => {
+    maplock.set(false);
+    res.redirect(req.header('Referer') || '/admin');
 }, 5));
 
 router.get("/report/reset", auth.authorize(ReportController.reset, 5));

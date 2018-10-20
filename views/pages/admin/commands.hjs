@@ -6,7 +6,26 @@
 <body>
     {{> header }}
     <div class="content mx-3">
-        
+        <h2 class="mb-5">{{title}}</h2>
+
+        <div class="my-3">
+            Map verouillée : {{MapStatus}}
+        </div>
+
+        <a href="commands/lock" class="btn btn-secondary btn-block">
+            Verouiller
+        </a>
+
+        <a href="commands/unlock" class="btn btn-secondary btn-block">
+            Déverouiller
+        </a>
+
+        <hr />
+
+        <a href="report/reset" class="btn btn-danger btn-block">
+            Reset de la carte
+        </a>
+
         <hr />
 
         <a href="{{target}}" class="btn btn-secondary btn-block">

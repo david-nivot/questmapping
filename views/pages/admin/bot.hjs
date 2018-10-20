@@ -6,7 +6,8 @@
 <body>
     {{> header }}
     <div class="content mx-3">
-
+        <h2 class="mb-5">{{title}}</h2>
+        
         <h5>Envoyer un message prédéfini</h5>
 
         <form method="post" action="/admin/bot/message">
