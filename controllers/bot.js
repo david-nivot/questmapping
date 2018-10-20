@@ -20,7 +20,7 @@ if (bot){
     });
 }
 
-async function sendMessage(chat, kind, params=[]) {
+async function sendSpecialMessage(chat, kind, params=[]) {
     if (bot) {
         var sentences = await BotLine.findAll({ where: { kind } });
         if( sentences.length > 0 ) {
@@ -32,24 +32,36 @@ async function sendMessage(chat, kind, params=[]) {
     }
 }
 
-module.exports = {
+async function sendTextMessage(message) {
+    if (bot) {
+        await bot.sendMessage(publicChatId, message, { parse_mode: "Markdown" });
+    }
+}
+
+var self = module.exports = {
 
     isActive: function() {
         return bot !== null;
     },
 
-    sayHello: async function(req, res) {
-        await sendMessage(publicChatId, "SayWelcome#1#1");
-        await sendMessage(publicChatId, "SayWelcome#1#2");
-        await sendMessage(publicChatId, "SayWelcome#1#3");
-        return res.redirect('/admin');
+    getMessages: async function() {
+        return await BotLine.findAll({ attributes: [ 'kind' ], group: 'kind', order: [[ 'kind' ]] });
     },
 
     sendPublicMessage: function(kind, params) {
-        sendMessage(publicChatId, kind, params);
+        sendSpecialMessage(publicChatId, kind, params);
     },
 
     sendAdminMessage: function(kind, params) {
-        sendMessage(adminChatId, kind, params);
+        sendSpecialMessage(adminChatId, kind, params);
     },
+
+    createMessage: function(req, res) {
+        if (req.body.kind !== undefined) {
+            self.sendPublicMessage(req.body.kind);
+        } else if (req.body.text !== undefined) {
+            sendTextMessage(req.body.text);
+        }
+        res.redirect('/admin');
+    }
 }

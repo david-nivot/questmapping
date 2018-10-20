@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {{> head }}
+</head>
+<body>
+    {{> header }}
+    <div class="content mx-3">
+
+        <h5>Envoyer un message prédéfini</h5>
+
+        <form method="post" action="/admin/bot/message">
+            <div class="form-group">
+                <label for="kind">Type de message</label>
+                <select class="form-control" id="kind" name="kind">
+                    {{#messages}}
+                    <option>{{kind}}</option>
+                    {{/messages}}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-secondary btn-sm">Envoyer</button>
+        </form>
+
+        <hr />
+
+        <h5>Envoyer un message</h5>
+
+        <form method="post" action="/admin/bot/message">
+            <div class="form-group">
+                <label for="text">Message</label>
+                <textarea class="form-control" id="text" name="text" rows="3"></textarea>
+            </div>
+            <button type="submit" class="btn btn-secondary btn-sm">Envoyer</button>
+        </form>
+
+        <hr />
+
+        <a href="/admin" class="btn btn-secondary btn-block">
+            Retour
+        </a>
+
+    </div>
+    {{> footer }}
+</body>
+</html>

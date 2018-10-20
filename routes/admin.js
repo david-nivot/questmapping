@@ -19,15 +19,23 @@ router.get("/user/banned", auth.authorize(UserController.getBannedUsers, 3));
 router.post("/user/update/:id", auth.authorize(UserController.updateUser, 3));
 
 router.get("/report/errors", auth.authorize(ReportController.getErrorList, 3));
-//router.get("/bot", BotController.);
-//router.get("/commands", );
+
+router.get('/bot', auth.authorize(async function(req, res, next) {
+    var messages = await BotController.getMessages();
+    View.render(req, res, 'pages/admin/bot', {
+        title: 'Commandes bot',
+        isSuperAdmin: req.session.credentials >= 6,
+        messages,
+    });
+}, 4));
+router.post("/bot/message", auth.authorize(BotController.createMessage, 4));
 
 router.get('/commands', auth.authorize(function(req, res, next) {
     View.render(req, res, 'pages/admin/commands', {
         title: 'Commandes admin',
         isSuperAdmin: req.session.credentials >= 6,
     });
-}, 3));
+}, 5));
 
 router.get("/report/reset", auth.authorize(ReportController.reset, 5));
 router.get("/report/delete/:id", auth.authorize(ReportController.delete, 5));
