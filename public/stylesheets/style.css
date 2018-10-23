@@ -1,6 +1,6 @@
 body {
     font-family: "Lato", Helvetica, Arial, sans-serif;
-    background-color: rgb(59, 59, 59);
+    background-color: rgb(0, 0, 0);
     color: white;
     height: 100%;
 }
@@ -10,16 +10,16 @@ a {
 }
 
 .navbar {
-    background-color: black;
+    background-color: #5d366d;
 }
 
 .navbar-top {
-    border-bottom: 1px solid #fff;
+    border-bottom: 1px solid #FFFFFF;
     height: 45px;
 }
 
 .navbar-bottom {
-    border-top: 1px solid #fff;;
+    border-top: 1px solid #FFFFFF;
     height: 35px;
     font-size: 14px;
 }
@@ -62,20 +62,20 @@ a {
     display: flex;
     align-items: center;
     font-weight: 900;
-    color: #636363;
-    background-color: #f7fcf6;
+    color: #000;
+    background-color: #b6bab5;
 
     border-radius: 10px;
-    border: 1px solid black;
+    border: 1px solid #5d366d;
     margin: 5px;
     padding: 10px;
 
 }
 .btn-quest-group {
-    background-color: #fadab5;
+    background-color: #a89177;
     box-shadow:
     0 1px 1px rgba(0,0,0,0.15),
-    0 10px 0 -5px #eee,
+    0 10px 0 -5px #aaa,
     0 10px 1px -4px rgba(0,0,0,0.15);
     margin-bottom: 10px;
 }
