@@ -10,7 +10,7 @@ function checkLock( cb ) {
         if (maplock.get()) {
             View.render(req, res, 'pages/message', {
                 class: "text-danger",
-                message: "Un évènement est en cours, cette action est temporairement indisponible."
+                message: "Une maintenance est en cours, cette action est temporairement indisponible."
             });
         } else {
             return await cb(req, res, next);
