@@ -58,13 +58,13 @@ module.exports = {
     },
 
     async reset(req, res) {
-        var count = await deleteAll();
+        var count = await deleteAll() + 2;
         bot.sendPublicMessage("ForcedQuestReset", [count]);
         return res.redirect('/admin/');
     },
 
     async scheduledReset() {
-        var count = await deleteAll();
+        var count = await deleteAll() + 2;
         bot.sendPublicMessage("DailyQuestReset", [count]);
     },
 

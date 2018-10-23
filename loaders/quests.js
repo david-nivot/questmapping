@@ -8,19 +8,19 @@ async function cleanQuestsFromDB() {
     await models.QuestGroup.destroy({where: {}});
 }
 
-function processQuestRow( row ) {
+async function processQuestRow( row ) {
 
     if(!row.goal) { // is QuestGroup
-        sequelize_fixtures.loadFixture({ model: 'QuestGroup', data: row }, models);
+        await sequelize_fixtures.loadFixture({ model: 'QuestGroup', data: row }, models);
     } else { // is Quest
         var parent = row.QuestGroupId;
         if(row.icon) {
             var data = { id: row.id, name: row.reward, icon: row.icon, MapLayerId: row.MapLayerId, QuestGroupId: row.QuestGroupId };
             parent = row.id;
-            sequelize_fixtures.loadFixture({ model: 'QuestGroup', data }, models);
+            await sequelize_fixtures.loadFixture({ model: 'QuestGroup', data }, models);
         }
         var data = { id: row.id, goal: row.goal, reward: row.reward, rarity: row.rarity, QuestGroupId: parent };
-        sequelize_fixtures.loadFixture({ model: 'Quest', data }, models);
+        await sequelize_fixtures.loadFixture({ model: 'Quest', data }, models);
     }
 
 }
