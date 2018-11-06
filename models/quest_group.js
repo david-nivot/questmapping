@@ -7,6 +7,7 @@ module.exports = (sequelize, type) => {
         },
         name: { type: type.STRING, allowNull: false },
         icon: { type: type.STRING, allowNull: false },
+        iconHD: { type: type.STRING, allowNull: true },
         isRoot: { type: type.BOOLEAN, allowNull: false, defaultValue: false }
     })
 

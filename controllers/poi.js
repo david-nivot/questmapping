@@ -94,9 +94,10 @@ module.exports = {
                 });
 
                 if(bot.isActive) {
-                    var quest = await Quest.findOne({ where: { id: req.query.quest } });
+                    var quest = await Quest.findOne({ where: { id: req.query.quest }, include: [QuestGroup] });
                     if(quest.rarity >= config.telegram.minQuestRarity) {
-                        bot.sendPublicMessage("NewQuest", [poi.name, quest.goal, quest.reward, target]);
+                        var icon = quest.QuestGroup.iconHD ? "[​​​​​​​​​​​]("+getImageLink(quest.QuestGroup.iconHD)+")" : "";
+                        bot.sendPublicMessage("NewQuest", [poi.name, quest.goal, quest.reward, target, icon]);
                     }
                 }
 

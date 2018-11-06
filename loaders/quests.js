@@ -15,7 +15,7 @@ async function processQuestRow( row ) {
     } else { // is Quest
         var parent = row.QuestGroupId;
         if(row.icon) {
-            var data = { id: row.id, name: row.reward, icon: row.icon, MapLayerId: row.MapLayerId, QuestGroupId: row.QuestGroupId };
+            var data = { id: row.id, name: row.reward, icon: row.icon, iconHD: row.iconHD, MapLayerId: row.MapLayerId, QuestGroupId: row.QuestGroupId };
             parent = row.id;
             await sequelize_fixtures.loadFixture({ model: 'QuestGroup', data }, models);
         }
