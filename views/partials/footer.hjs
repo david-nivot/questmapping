@@ -1,4 +1,4 @@
-<nav class="navbar navbar-bottom fixed-bottom" role="navigation">
+<nav class="navbar navbar-bottom fixed-bottom" role="navigation" style="display:none">
     <div class="container">
         <a class="nav-link mx-auto" href="{{contact}}">
             Contact

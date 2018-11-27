@@ -33,7 +33,7 @@
 
         <hr />
 
-        <a href="{{target}}" class="btn btn-secondary btn-block">
+        <a href="{{frontUrl}}" class="btn btn-secondary btn-block">
             Retour à la carte
         </a>
     </div>
