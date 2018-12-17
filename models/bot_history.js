@@ -6,8 +6,8 @@ module.exports = (sequelize, type) => {
             autoIncrement: true
         },
         kind: { type: type.STRING, allowNull: false },
-        chatId: { type: type.INTEGER, allowNull: false },
-        messageId: { type: type.INTEGER, allowNull: false },
+        chatId: { type: type.STRING, allowNull: false },
+        messageId: { type: type.STRING, allowNull: false },
     });
 
     return BotLine;
