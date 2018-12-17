@@ -59,13 +59,13 @@ module.exports = {
 
     async reset(req, res) {
         var count = await deleteAll() + 2;
-        bot.sendPublicMessage("ForcedQuestReset", [count]);
+        bot.sendQuestLine("ForcedQuestReset", [count]);
         return res.redirect('/admin/');
     },
 
     async scheduledReset() {
         var count = await deleteAll() + 2;
-        bot.sendPublicMessage("DailyQuestReset", [count]);
+        bot.sendQuestLine("DailyQuestReset", [count]);
     },
 
     async reportError(req, res) {
@@ -82,7 +82,7 @@ module.exports = {
                 var editor = await User.findOne({ where: { id: req.session.userid } });
                 if(editor) {
                     await report.update({ EditorId: editor.id });
-                    bot.sendAdminMessage("ReportHasError", [editor.name, report.User.name, report.Poi.name]);
+                    bot.sendAdminLine("ReportHasError", [editor.name, report.User.name, report.Poi.name]);
                 } else {
                     View.render(req, res, 'pages/message', {
                         class: "text-danger",

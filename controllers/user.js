@@ -71,7 +71,7 @@ module.exports = {
                 res.redirect('/register');
             } else {
                 await saveUserOnSession(req, user);
-                bot.sendAdminMessage("NewUser", [user.name]);
+                bot.sendAdminLine("NewUser", [user.name]);
                 res.redirect(req.session.origin || "/");
             }
         })
@@ -157,7 +157,7 @@ module.exports = {
                     });
                 } else {
                     await user.update({ credentials: req.body.credentials });
-                    bot.sendAdminMessage("UserCredentialsUpdated", [user.name, req.session.username, req.body.credentials]);
+                    bot.sendAdminLine("UserCredentialsUpdated", [user.name, req.session.username, req.body.credentials]);
                 }
             } else {
                 return View.render(req, res, 'pages/message', {

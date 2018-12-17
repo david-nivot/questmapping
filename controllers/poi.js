@@ -97,7 +97,7 @@ module.exports = {
                     var quest = await Quest.findOne({ where: { id: req.query.quest }, include: [QuestGroup] });
                     if(quest.rarity >= config.telegram.minQuestRarity) {
                         var icon = quest.QuestGroup.iconHD ? "[​​​​​​​​​​​]("+getImageLink(quest.QuestGroup.iconHD)+")" : "";
-                        bot.sendPublicMessage("NewQuest", [poi.name, quest.goal, quest.reward, target, icon]);
+                        bot.sendQuestLine("NewQuest", [poi.name, quest.goal, quest.reward, target, icon], true);
                     }
                 }
 

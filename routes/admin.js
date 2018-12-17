@@ -22,7 +22,7 @@ router.post("/user/update/:id", auth.authorize(UserController.updateUser, 3));
 router.get("/report/errors", auth.authorize(ReportController.getErrorList, 3));
 
 router.get('/bot', auth.authorize(async function(req, res, next) {
-    var messages = await BotController.getMessages();
+    var messages = await BotController.getLines();
     View.render(req, res, 'pages/admin/bot', {
         title: 'Commandes bot',
         isSuperAdmin: req.session.credentials >= 6,

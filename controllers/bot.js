@@ -1,6 +1,7 @@
 const TelegramBot = require('node-telegram-bot-api');
 const StringBuilder = require("string-builder");
 const BotLine = require('../models').BotLine;
+const BotHistory = require('../models').BotHistory;
 
 const config = require(__dirname + '/../config/config.js');
 
@@ -20,14 +21,17 @@ if (bot){
     });
 }
 
-async function sendSpecialMessage(chat, kind, params=[]) {
+async function sendLine(chatId, kind, params=[], save) {
     if (bot) {
         var sentences = await BotLine.findAll({ where: { kind } });
         if( sentences.length > 0 ) {
             var row = sentences[Math.floor(Math.random()*sentences.length)];
             var sb = new StringBuilder();
             sb.appendFormat(row.sentence, ...params);
-            await bot.sendMessage(chat, sb.toString(), { parse_mode: "Markdown" });
+            var message = await bot.sendMessage(chatId, sb.toString(), { parse_mode: "Markdown" });
+            if( save ) {
+                await BotHistory.create({ kind, chatId, messageId: message.message_id });
+            }
         }
     }
 }
@@ -44,21 +48,35 @@ var self = module.exports = {
         return bot !== null;
     },
 
-    getMessages: async function() {
+    getLines: async function() {
         return await BotLine.findAll({ attributes: [ 'kind' ], group: 'kind', order: [[ 'kind' ]] });
     },
 
-    sendPublicMessage: function(kind, params) {
-        sendSpecialMessage(publicChatId, kind, params);
+    sendQuestLine: function(line, params, save) {
+        sendLine(publicChatId, line, params, save);
     },
 
-    sendAdminMessage: function(kind, params) {
-        sendSpecialMessage(adminChatId, kind, params);
+    sendAdminLine: function(line, params) {
+        sendLine(adminChatId, line, params, false);
+    },
+
+    removeMessages: async function(kind) {
+        if(bot) {
+            var messages = await BotHistory.findAll({ where: { kind } });
+            messages.forEach( async m => {
+                try {
+                    await bot.deleteMessage(m.chatId, m.messageId);
+                } catch (e) {
+                } finally {
+                    m.destroy();
+                }
+            });
+        }
     },
 
     createMessage: function(req, res) {
         if (req.body.kind !== undefined) {
-            self.sendPublicMessage(req.body.kind);
+            self.sendQuestLine(req.body.kind, {}, true);
         } else if (req.body.text !== undefined) {
             sendTextMessage(req.body.text);
         }
