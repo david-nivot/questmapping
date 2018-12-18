@@ -60,6 +60,7 @@ module.exports = {
     async reset(req, res) {
         var count = await deleteAll() + 2;
         bot.sendQuestLine("ForcedQuestReset", [count]);
+        bot.removeMessages("NewQuest");
         return res.redirect('/admin/');
     },
 
