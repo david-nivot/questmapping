@@ -1,6 +1,6 @@
 body {
     font-family: "Lato", Helvetica, Arial, sans-serif;
-    background-color: rgb(15, 56, 0);
+    background-color: rgb(59, 59, 59);
     color: white;
     height: 100%;
 }
@@ -10,7 +10,7 @@ a {
 }
 
 .navbar {
-    background-color: rgb(80, 0, 0);
+    background-color: black;
 }
 
 .navbar-top {

@@ -1,6 +1,6 @@
 <nav class="navbar navbar-top fixed-top" role="navigation">
     <a class="navbar-brand" href="{{frontUrl}}">
-        <img src="/images/logo_noel.png" width="60" height="60" alt="logo" style="margin-top: 20px">
+        <img src="/images/logo_white.png" width="32" height="32" alt="logo">
     </a>
     {{#user}}
     <div style="color:{{color}}" data-toggle="modal" data-target="#exampleModalCenter">
