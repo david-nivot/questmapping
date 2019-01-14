@@ -23,5 +23,10 @@ module.exports = {
         publicChatId: process.env.TELEGRAM_PUBLIC_CHAT_ID,
         adminChatId: process.env.TELEGRAM_ADMIN_CHAT_ID,
         minQuestRarity: 4,
+    },
+    datasource: {
+        bot: process.env.DATASOURCE_BOT,
+        poi: process.env.DATASOURCE_POI,
+        quest: process.env.DATASOURCE_QUEST,
     }
 };

@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var auth = require('./auth');
+var ConfigLoader = require('../config/loader');
 var ReportController = require('../controllers/report');
 var UserController = require('../controllers/user');
 var BotController = require('../controllers/bot');
@@ -48,6 +49,10 @@ router.get("/commands/unlock", auth.authorize( (req, res) => {
     maplock.set(false);
     res.redirect(req.header('Referer') || '/admin');
 }, 5));
+
+router.get("/commands/load_bot", auth.authorize(ConfigLoader.loadBotLines, 5));
+router.get("/commands/load_poi", auth.authorize(ConfigLoader.loadPois, 5));
+router.get("/commands/load_quest", auth.authorize(ConfigLoader.loadQuests, 5));
 
 router.get("/report/reset", auth.authorize(ReportController.reset, 5));
 router.get("/report/delete/:id", auth.authorize(ReportController.delete, 5));

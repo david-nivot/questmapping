@@ -28,6 +28,20 @@
 
         <hr />
 
+        <a href="commands/load_bot" class="btn btn-danger btn-block">
+            Recharger les dialogues bot
+        </a>
+
+        <a href="commands/load_poi" class="btn btn-danger btn-block">
+            Recharger les poi
+        </a>
+
+        <a href="commands/load_quest" class="btn btn-danger btn-block">
+            Recharger les quêtes
+        </a>
+
+        <hr />
+
         <a href="/admin" class="btn btn-secondary btn-block">
             Retour
         </a>
