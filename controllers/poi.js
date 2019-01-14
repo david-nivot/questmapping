@@ -11,10 +11,11 @@ const config = require(__dirname + '/../config/config.js');
 async function fetchQuests(group) {
 
     var groups = await QuestGroup.findAll({
-        where: { QuestGroupId: { $eq: group || null } },
+        where: { QuestGroupId: { $eq: group || null }, visibility: 1 },
         include: [ {
             model: Quest,
             required: false,
+            where: { visibility: 1 }
         } ],
     })
 
@@ -22,7 +23,10 @@ async function fetchQuests(group) {
     if (groups.length === 0) {
         groups = await QuestGroup.findAll({
             where: { id: group },
-            include: [ Quest ],
+            include: [ {
+                model: Quest,
+                where: { visibility: 1 }
+            } ],
         })
     }
 
