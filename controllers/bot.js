@@ -12,11 +12,7 @@ const adminChatId = config.telegram.adminChatId;
 const bot = token ? new TelegramBot(token, {polling: true}) : null;
 
 if (bot){
-    bot.sendMessage(
-        adminChatId,
-        "Démarrage du serveur\n_Version "+ process.env.npm_package_version +"_",
-        { parse_mode: "Markdown" }
-    );
+    sendTextMessage(adminChatId, "Démarrage du serveur\n_Version "+ process.env.npm_package_version +"_");
     bot.on('message', (msg) => {
     });
 }
@@ -36,9 +32,9 @@ async function sendLine(chatId, kind, params=[], save) {
     }
 }
 
-async function sendTextMessage(message) {
+async function sendTextMessage(chatId, message) {
     if (bot) {
-        await bot.sendMessage(publicChatId, message, { parse_mode: "Markdown" });
+        await bot.sendMessage(chatId, message, { parse_mode: "Markdown" });
     }
 }
 
@@ -60,6 +56,10 @@ var self = module.exports = {
         sendLine(adminChatId, line, params, false);
     },
 
+    sendAdminMessage: function(message) {
+        sendTextMessage(adminChatId, message);
+    },
+
     removeMessages: async function(kind) {
         if(bot) {
             var messages = await BotHistory.findAll({ where: { kind } });
@@ -78,7 +78,7 @@ var self = module.exports = {
         if (req.body.kind !== undefined) {
             self.sendQuestLine(req.body.kind, {}, true);
         } else if (req.body.text !== undefined) {
-            sendTextMessage(req.body.text);
+            sendTextMessage(publicChatId, req.body.text);
         }
         res.redirect('/admin');
     }
