@@ -5,6 +5,7 @@ const Poi = require('../models').Poi;
 const Report = require('../models').Report;
 const Quest = require('../models').Quest;
 const QuestGroup = require('../models').QuestGroup;
+const StatController = require('./stat');
 
 module.exports = {
 
@@ -35,6 +36,7 @@ module.exports = {
                     req.protocol + '://' + req.get('host') + "/member/poi/" + poi.id,
                 );
             })
+            StatController.incrementHourlyStat("dl");
             res.setHeader('Content-disposition', 'attachment; filename=map.csv');
             res.set('Content-Type', 'text/csv');
             res.status(200).send(sb.toString());
