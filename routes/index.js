@@ -27,6 +27,12 @@ router.get('/suspended', async function(req, res, next) {
     });
 });
 
+router.get('/blog', function(req, res, next) {
+    View.render(req, res, 'pages/blog', {
+        title: 'QuestMapping'
+    });
+});
+
 router.get('/login', UserController.login);
 router.post('/login', UserController.doLogin);
 

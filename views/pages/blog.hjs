@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {{> head }}
+</head>
+<body>
+    {{> header }}
+    <div class="content">
+        Aucune info
+    </div>
+</body>
+</html>
