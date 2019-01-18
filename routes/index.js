@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var UserController = require('../controllers/user');
+const StatController = require('../controllers/stat');
 const View = require('../views');
 
 router.get('/', function(req, res, next) {
@@ -28,6 +29,7 @@ router.get('/suspended', async function(req, res, next) {
 });
 
 router.get('/blog', function(req, res, next) {
+    StatController.incrementHourlyStat("blog");
     View.render(req, res, 'pages/blog', {
         title: 'QuestMapping'
     });
