@@ -41,11 +41,11 @@ async function loadQuestData(src) {
                     } else { // is Quest
                         var parent = row.QuestGroupId;
                         if(row.icon) {
-                            var data = { id: row.id, name: row.reward, icon: row.icon, iconHD: row.iconHD, MapLayerId: row.MapLayerId, QuestGroupId: row.QuestGroupId, visibility: row.visibility };
+                            var data = { id: row.id, name: row.reward, icon: row.icon, iconHD: row.iconHD, MapLayerId: row.MapLayerId, QuestGroupId: row.QuestGroupId, visibility: row.visibility, color: row.color, isRoot: row.isRoot };
                             parent = row.id;
                             await sequelize_fixtures.loadFixture({ model: 'QuestGroup', data }, models);
                         }
-                        var data = { id: row.id, goal: row.goal, reward: row.reward, rarity: row.rarity, QuestGroupId: parent, visibility: row.visibility };
+                        var data = { id: row.id, goal: row.goal, reward: row.reward, rarity: row.rarity, QuestGroupId: parent, visibility: row.visibility, color: row.color };
                         await sequelize_fixtures.loadFixture({ model: 'Quest', data }, models);
                     }
                 });

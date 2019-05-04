@@ -8,7 +8,8 @@
     <div class="content">
         <div class="container">
             {{#quests}}
-            <a class="row btn-quest align-middle {{#isGroup}}btn-quest-group{{/isGroup}}" href="{{uri}}">
+            <a class="row btn-quest align-middle {{#isGroup}}btn-quest-group{{/isGroup}}" href="{{uri}}"
+            {{#color}}style="background:linear-gradient(135deg, #f7fcf6 65%,{{color}} 100%)"{{/color}} >
                 <div class="col-10">
                     {{#isGroup}}
                     {{name}}

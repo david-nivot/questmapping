@@ -10,6 +10,7 @@ module.exports = (sequelize, type) => {
         iconHD: { type: type.STRING, allowNull: true },
         isRoot: { type: type.BOOLEAN, allowNull: false, defaultValue: false },
         visibility: { type: type.TINYINT, defaultValue: 1 },
+        color: { type: type.STRING, allowNull: true },
     })
 
     QuestGroup.associate = function (models) {

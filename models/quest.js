@@ -9,6 +9,7 @@ module.exports = (sequelize, type) => {
         reward: { type: type.STRING, allowNull: false },
         rarity: { type: type.TINYINT, defaultValue: 1 },
         visibility: { type: type.TINYINT, defaultValue: 1 },
+        color: { type: type.STRING, allowNull: true },
     });
 
     Quest.associate = function (models) {

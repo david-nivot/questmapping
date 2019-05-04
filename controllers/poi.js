@@ -44,11 +44,11 @@ async function fetchQuests(group) {
             if (group.Quests.length === 1 ) {
                 var quest = group.Quests[0];
                 data.push({
-                    isGroup:false, uri:"?quest="+quest.id, goal:quest.goal, reward:quest.reward, icon:getImageLink(group.icon)
+                    isGroup:false, uri:"?quest="+quest.id, goal:quest.goal, reward:quest.reward, icon:getImageLink(group.icon), color:quest.color
                 });
             } else {
                 data.push({
-                    isGroup:true, uri:"?group="+group.id, name: group.name, icon:getImageLink(group.icon)
+                    isGroup:true, uri:"?group="+group.id, name: group.name, icon:getImageLink(group.icon), color:group.color
                 });
             }
         });
