@@ -1,8 +1,11 @@
 body {
     font-family: "Lato", Helvetica, Arial, sans-serif;
-    background-color: rgb(59, 59, 59);
     color: white;
     height: 100%;
+    background-image:url("/images/bg.png");
+    background-repeat: repeat;
+    background-size: 50%;
+    background-color: rgb(59, 59, 59);
 }
 
 a {
@@ -11,6 +14,9 @@ a {
 
 .navbar {
     padding-top: 0;
+    background-image:url("/images/bg_dark.png");
+    background-repeat: repeat;
+    background-size: 50%;
     background-color: black;
 }
 
@@ -33,45 +39,102 @@ a {
     padding: 50px 5px 40px 5px;
 }
 
+.container {
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
 .modal-title {
     color: black;
 }
 
 @media screen and (min-width: 601px) {
-    .btn-quest {
-        font-size: 25px;
+    .row-quest {
+        font-size: 20px;
         min-height: 100px;
     }
     .img-quest>img {
-        max-height: 64px;
+        position: absolute;
+        top: 50%;
+        margin-top: -32px;
+        left: 50%;
+        margin-left: -32px;
+        height: 64px;
         width: auto;
     }
 }
 
 @media screen and (max-width: 600px) {
-    .btn-quest {
+    .row-quest {
         font-size: 10px;
         min-height: 60px;
     }
     .img-quest>img {
-        max-height: 32px;
+        position: absolute;
+        top: 50%;
+        margin-top: -20px;
+        left: 50%;
+        margin-left: -20px;
+        height: 40px;
         width: auto;
     }
 }
 
-.btn-quest {
+.row-quest {
     display: flex;
     align-items: center;
-    font-weight: 900;
-    color: #636363;
-    background-color: #f7fcf6;
-
+    margin: 5px;
     border-radius: 10px;
     border: 1px solid black;
-    margin: 5px;
-    padding: 10px;
-
+    background-color: #f7fcf6;
+    padding: 2px;
 }
+
+.row-quest-desc {
+    font-weight: 900;
+    color: #3e3e3e;
+
+    padding: 10px;
+    margin:0;
+    height: 100%;
+}
+
+.row-quest-desc p {
+    margin:0;
+}
+
+.row-quest-btn-container {
+    height: 100%;
+    margin:0;
+    padding: 1px;
+}
+
+.row-quest-btn {
+    border-radius: 10px;
+    border: 1px solid black;
+    padding: 7px 0 5px 0;
+    text-align: center;
+    display: block;
+    margin:0;
+    height: 100%;
+}
+
+.row-quest-btn i{
+    font-size: 30px;
+}
+
+.row-quest-btn-ok {
+    color: #003007;
+    background-color: rgba(87, 131, 93, 1);
+    border-color: #003007;
+}
+
+.row-quest-btn-more {
+    color: #010030;
+    background-color: rgba(90, 107, 135, 1);
+    border-color: #010030;
+}
+
 .btn-quest-group {
     background-color: #fadab5;
     box-shadow:
@@ -89,8 +152,7 @@ a {
 }
 
 .img-quest {
-    display: flex;
-    justify-content: center;
+    position: relative;
 }
 
 .message-bloc {

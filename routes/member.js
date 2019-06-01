@@ -18,6 +18,7 @@ function checkLock( cb ) {
     }
 }
 
+router.get("/poi/:id/refine", checkLock(PoiController.refineReport));
 router.get("/poi/:id", checkLock(PoiController.createReport));
 router.get("/report/:id", checkLock(ReportController.reportError));
 

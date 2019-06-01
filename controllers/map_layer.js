@@ -36,7 +36,6 @@ module.exports = {
                     req.protocol + '://' + req.get('host') + "/member/poi/" + poi.id,
                 );
             })
-            StatController.incrementHourlyStat("dl");
             res.setHeader('Content-disposition', 'attachment; filename=map.csv');
             res.set('Content-Type', 'text/csv');
             res.status(200).send(sb.toString());
@@ -60,7 +59,7 @@ module.exports = {
                     }
                 }
             },
-            attributes: ['name', 'latitude', 'longitude']
+            attributes: ['id', 'name', 'latitude', 'longitude']
         }).then(pois => {
             let sb = new StringBuilder();
             sb.append("lat;long;name;description;icon");
@@ -75,11 +74,12 @@ module.exports = {
                     poi.name,
                 );
                 sb.appendFormat(
-                    '"Objectif: **{0}**\nRécompense: **{1}**\n*Le {2}*\n\n[[{3}|Signaler erreur]]";',
+                    '"Objectif: **{0}**\nRécompense: **{1}**\n*Le {2}*\n\n[[{3}|Signaler erreur]]\n\n[[{4}|Affiner]]";',
                     poi.Reports[0].Quest.goal,
                     poi.Reports[0].Quest.reward,
                     moment(poi.Reports[0].createdAt).format("DD/MM à HH:mm"),
                     req.protocol + '://' + req.get('host') + "/member/report/" + poi.Reports[0].id,
+                    req.protocol + '://' + req.get('host') + "/member/poi/" + poi.id + "/refine",
                 );
                 sb.append(poi.Reports[0].Quest.QuestGroup.icon);
             })

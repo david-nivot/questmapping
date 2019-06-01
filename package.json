@@ -1,6 +1,6 @@
 {
   "name": "questmapping",
-  "version": "0.1.28",
+  "version": "0.2.0",
   "description": "",
   "scripts": {
     "start:dev": "nodemon ./bin/www",
@@ -40,7 +40,7 @@
     "mysql2": "^1.6.1",
     "node-telegram-bot-api": "^0.30.0",
     "request": "^2.88.0",
-    "sequelize": "^4.43.2",
+    "sequelize": "^4.44.0",
     "sequelize-fixtures": "^0.7.0",
     "string-builder": "^0.1.6"
   },

@@ -40,22 +40,47 @@ async function fetchQuests(group) {
             });
         });
     } else { //Si plusieurs groupes, on va transformer les groupes mono-quest en quest, ou garder le groupe
-        groups.forEach( group => {
-            if (group.Quests.length === 1 ) {
+        for (group of groups) {
+            let isQuest = (await QuestGroup.count({ where: { QuestGroupId: group.id } }) +
+                await Quest.count({ where: { QuestGroupId: group.id } })) <= 1;
+                console.log(group.Quests.length, isQuest)
+            if (group.Quests.length >= 1) {
                 var quest = group.Quests[0];
-                data.push({
-                    isGroup:false, uri:"?quest="+quest.id, goal:quest.goal, reward:quest.reward, icon:getImageLink(group.icon), color:quest.color
-                });
+                if(isQuest) { //Cas d'une quête
+                    data.push({
+                        isGroup:false,
+                        uri_ok:"?quest="+quest.id,
+                        goal:quest.goal,
+                        reward:quest.reward,
+                        icon:getImageLink(group.icon),
+                        color:quest.color,
+                    });
+                } else { //Cas d'un groupe de quest précisable
+                    data.push({
+                        isGroup:true,
+                        isQuest:true,
+                        uri_ok:"?quest="+quest.id,
+                        uri_more:"?group="+group.id,
+                        goal:quest.goal,
+                        reward:quest.reward,
+                        icon:getImageLink(group.icon),
+                        color:quest.color,
+
+                    });
+                }
             } else {
                 data.push({
-                    isGroup:true, uri:"?group="+group.id, name: group.name, icon:getImageLink(group.icon), color:group.color
+                    isGroup:true,
+                    isQuest:false,
+                    uri_more:"?group="+group.id,
+                    name: group.name,
+                    icon:getImageLink(group.icon),
+                    color:group.color,
                 });
             }
-        });
+        }
     }
-
     return data;
-
 }
 
 function getImageLink( id ) {
@@ -116,5 +141,72 @@ module.exports = {
                 });
             }
         }
+    },
+
+    async refineReport(req, res) {
+
+        var poi = await Poi.findOne({ where: { id: req.params.id } });
+
+        if(!poi) {
+            View.render(req, res, 'pages/message', {
+                class: "text-danger",
+                message: "Lieu non existant"
+            });
+            return;
+        }
+
+        var target = config.frontUrl + "#17/" + poi.latitude + "/" + poi.longitude;
+
+        var report = await Report.findOne({
+            where: { PoiId: req.params.id, EditorId: { $eq: null } },
+            include: [ {
+                model: Quest
+            } ],
+        });
+
+        //Si un rapport existe déjà, on regarde si la quete est précisable
+        if (report) {
+            var groupCount = await QuestGroup.count({
+                where: { QuestGroupId: { $eq: report.Quest.QuestGroupId } }
+            });
+            if(groupCount > 0) {
+                if(req.query.quest) {
+                    report.update({
+                        QuestId: req.query.quest, UserId: req.session.userid
+                    });
+
+                    if(bot.isActive) {
+                        var quest = await Quest.findOne({ where: { id: req.query.quest }, include: [QuestGroup] });
+                        if(quest.rarity >= config.telegram.minQuestRarity) {
+                            var icon = quest.QuestGroup.iconHD ? "[​​​​​​​​​​​]("+getImageLink(quest.QuestGroup.iconHD)+")" : "";
+                            bot.sendQuestLine("QuestRefine", [poi.name, quest.goal, quest.reward, target, icon], true);
+                        }
+                    }
+
+                    View.render(req, res, 'pages/message', {
+                        target,
+                        message: report ? "Enregistrement terminé." : "Echec de la création du signalement."
+                    });
+                } else {
+                    var quests = await fetchQuests(req.query.group !== undefined ? req.query.group : report.Quest.QuestGroupId);
+                    View.render(req, res, 'pages/member/createReport', {
+                        quests,
+                    });
+                }
+            } else {
+                View.render(req, res, 'pages/message', {
+                    target,
+                    class: "text-danger",
+                    message: "Ce signalement ne peut pas être affiné."
+                });
+            }
+        } else {
+            View.render(req, res, 'pages/message', {
+                target,
+                class: "text-danger",
+                message: "Ce signalement n'existe pas."
+            });
+        }
+
     }
 }
